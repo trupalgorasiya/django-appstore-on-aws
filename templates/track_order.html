@@ -1,0 +1,304 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+
+/* =============================
+   WRAPPER
+============================= */
+
+.track-wrapper {
+    max-width: 1200px;
+    margin: 80px auto;
+    padding: 0 30px;
+}
+
+/* =============================
+   BACK BUTTON
+============================= */
+
+.back-btn {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 8px 16px;
+    background: #f3f4f6;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #374151;
+    transition: 0.3s ease;
+}
+
+.back-btn:hover {
+    background: #e5e7eb;
+}
+
+/* =============================
+   HEADER
+============================= */
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.order-header h2 {
+    font-size: 26px;
+}
+
+.status-badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* =============================
+   ORDER INFO BOX
+============================= */
+
+.order-info-box,
+.order-products,
+.progress-container {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+    margin-bottom: 40px;
+}
+
+.order-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+    font-size: 14px;
+}
+
+/* =============================
+   PRODUCTS
+============================= */
+
+.product-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.product-left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.product-left img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.product-info h4 {
+    margin-bottom: 5px;
+    font-size: 15px;
+}
+
+.product-info span {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.product-right {
+    text-align: right;
+    font-size: 14px;
+}
+
+.order-totals {
+    margin-top: 30px;
+    text-align: right;
+    font-size: 15px;
+}
+
+.order-totals .grand-total {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* =============================
+   PROGRESS BAR
+============================= */
+
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.progress-steps::before {
+    content: "";
+    position: absolute;
+    top: 18px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: #e5e7eb;
+    z-index: 1;
+}
+
+.step {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    width: 25%;
+}
+
+.step-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    line-height: 36px;
+    font-size: 14px;
+    background: #e5e7eb;
+    color: #6b7280;
+}
+
+.step.completed .step-circle {
+    background: #16a34a;
+    color: white;
+}
+
+.step.active .step-circle {
+    background: #6366f1;
+    color: white;
+}
+
+.step.cancelled .step-circle {
+    background: #dc2626;
+    color: white;
+}
+
+.step-label {
+    font-size: 13px;
+}
+
+</style>
+
+<div class="track-wrapper">
+
+<a href="{% url 'order_history' %}" class="back-btn">
+    ← Back to Orders
+</a>
+
+<div class="order-header">
+    <h2>Order #{{ order.id }}</h2>
+
+    <div class="status-badge"
+        {% if order.status == "Completed" %}
+            style="background:#dcfce7;color:#166534;"
+        {% elif order.status == "Pending" %}
+            style="background:#fef3c7;color:#92400e;"
+        {% elif order.status == "Accepted" %}
+            style="background:#dbeafe;color:#1e40af;"
+        {% elif order.status == "Ready" %}
+            style="background:#ede9fe;color:#5b21b6;"
+        {% elif order.status == "Cancelled" %}
+            style="background:#fee2e2;color:#991b1b;"
+        {% endif %}
+    >
+        {{ order.status }}
+    </div>
+</div>
+
+<!-- ORDER DETAILS -->
+<div class="order-info-box">
+    <div class="order-info-grid">
+        <div><strong>Order Date:</strong> {{ order.created_at|date:"d M Y, h:i A" }}</div>
+        <div><strong>Payment Method:</strong> {{ order.payment_method }}</div>
+        <div><strong>Email:</strong> {{ order.email }}</div>
+        <div><strong>Phone:</strong> {{ order.phone }}</div>
+
+        {% if order.razorpay_payment_id %}
+        <div><strong>Razorpay Payment ID:</strong> {{ order.razorpay_payment_id }}</div>
+        {% endif %}
+
+        <div style="grid-column: span 2;">
+            <strong>Shipping Address:</strong><br>
+            {{ order.address }}
+        </div>
+    </div>
+</div>
+<!-- 
+!-- PRODUCTS --
+<div class="order-products">
+    <h3>Ordered Products</h3>
+
+    {% for item in order.items.all %}
+    <div class="product-row">
+        <div class="product-left">
+            <img src="{{ item.product.image.url }}" alt="">
+            <div class="product-info">
+                <h4>{{ item.product.name }}</h4>
+                <span>Warranty: {{ item.warranty_years }} Years</span><br>
+                <span>Qty: {{ item.quantity }}</span>
+            </div>
+        </div>
+
+        <div class="product-right">
+            ₹{{ item.price|floatformat:2 }}<br>
+            Subtotal: ₹{{ item.subtotal|floatformat:2 }}
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="order-totals">
+        <div>Subtotal: ₹{{ order.subtotal|floatformat:2 }}</div>
+        <div>GST (5%): ₹{{ order.gst|floatformat:2 }}</div>
+        <div class="grand-total">Total: ₹{{ order.total|floatformat:2 }}</div>
+    </div>
+</div> -->
+
+<!-- ORDER LIFE CYCLE -->
+<div class="progress-container">
+    <h3>Order Status</h3>
+
+    <div class="progress-steps">
+
+    {% if order.status == "Cancelled" %}
+        <div class="step cancelled">
+            <div class="step-circle">✕</div>
+            <div class="step-label">Cancelled</div>
+        </div>
+    {% else %}
+
+        <div class="step {% if order.status in 'Pending Accepted Ready Completed' %}completed{% endif %}">
+            <div class="step-circle">1</div>
+            <div class="step-label">Ordered</div>
+        </div>
+
+        <div class="step {% if order.status == 'Accepted' or order.status == 'Ready' or order.status == 'Completed' %}completed{% endif %}">
+            <div class="step-circle">2</div>
+            <div class="step-label">Accepted</div>
+        </div>
+
+        <div class="step {% if order.status == 'Ready' or order.status == 'Completed' %}completed{% endif %}">
+            <div class="step-circle">3</div>
+            <div class="step-label">Ready</div>
+        </div>
+
+        <div class="step {% if order.status == 'Completed' %}completed{% endif %}">
+            <div class="step-circle">4</div>
+            <div class="step-label">Completed</div>
+        </div>
+
+    {% endif %}
+
+    </div>
+</div>
+
+</div>
+
+{% endblock %}

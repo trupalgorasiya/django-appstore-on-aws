@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Wishlist</title>
+    <style>
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    margin: 0;
+}
+
+.wishlist-wrapper {
+    max-width: 1100px;
+    margin: 80px auto;
+    padding: 0 40px;
+}
+
+.wishlist-wrapper h2 {
+    margin-bottom: 30px;
+}
+
+/* Message */
+.message {
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+}
+
+.message.success {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.message.warning {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.wishlist-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+.wishlist-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.wishlist-left img {
+    width: 90px;
+    border-radius: 8px;
+}
+
+.product-info h4 {
+    margin: 0 0 5px;
+}
+
+.product-info p {
+    margin: 0;
+    font-weight: bold;
+}
+
+.wishlist-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.add-cart-btn {
+    padding: 10px 15px;
+    background: #111827;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.remove-btn {
+    padding: 10px 15px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.empty-msg {
+    text-align: center;
+    padding: 50px;
+    color: #64748b;
+}
+
+    </style>
+</head>
+<body>
+
+<div class="wishlist-wrapper">
+    <h2>My Wishlist</h2>
+
+    <!-- {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %} -->
+
+    {% if wishlist_items %}
+        {% for item in wishlist_items %}
+        <div class="wishlist-card">
+
+            <div class="wishlist-left">
+                <a href="{% url 'product_detail' item.product.id %}">
+                <img src="{{ item.product.image.url }}" alt="{{ product.name }}">
+            </a>
+                <!-- <img src="{{ item.product.image.url }}"> -->
+                <div class="product-info">
+                    <h4>{{ item.product.name }}</h4>
+                    <p>₹{{ item.product.price }}</p>
+                </div>
+            </div>
+
+            <div class="wishlist-actions">
+                 <a href="{% url 'add_to_cart' item.product.id %}">
+                    <button class="add-cart">Add to Cart</button>
+                </a>
+
+                <a href="{% url 'remove_from_wishlist' item.product.id %}">
+                    <button class="remove-btn">Remove</button>
+                </a>
+            </div>
+
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="empty-msg">
+            Your wishlist is empty.
+        </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
+{% endblock %}

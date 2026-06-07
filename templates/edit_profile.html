@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/user_details.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="profile-wrapper">
+    <div class="profile-content" style="width:100%;">
+        <h2>Edit Profile</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- Full Name -->
+            <div class="info-group">
+                <label>Full Name</label>
+                <input type="text" name="name" value="{{ user.first_name }}" required>
+            </div>
+
+            <!-- Email (Disabled) -->
+            <div class="info-group">
+                <label>Email Address</label>
+                <input type="email" value="{{ user.email_id }}" disabled>
+            </div>
+
+            <!-- Mobile -->
+            <div class="info-group">
+                <label>Mobile Number</label>
+                <input type="text" name="phone" value="{{ user.contact_no }}" required>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="info-group">
+                <label>Date of Birth</label>
+                <input type="date" name="dob"
+                       value="{{ user.dob_date|date:'Y-m-d' }}">
+            </div>
+
+            <!-- Address -->
+            <div class="info-group">
+                <label>Address</label>
+                <input type="text" name="address" value="{{ user.address }}">
+            </div>
+
+            <button type="submit" class="edit-btn" style="margin-top:20px;">
+                Save Changes
+            </button>
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}

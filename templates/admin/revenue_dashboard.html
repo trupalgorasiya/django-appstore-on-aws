@@ -1,0 +1,110 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+
+<h1>💰 Revenue Dashboard</h1>
+
+<div class="dashboard-cards">
+
+    <div class="card">
+        <h3>Total Revenue</h3>
+        <p>₹{{ total_revenue }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Today</h3>
+        <p>₹{{ today_revenue }}</p>
+    </div>
+
+    <div class="card">
+        <h3>This Month</h3>
+        <p>₹{{ monthly_revenue }}</p>
+    </div>
+
+    <div class="card">
+        <h3>COD Revenue</h3>
+        <p>₹{{ cod_revenue }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Online Revenue</h3>
+        <p>₹{{ online_revenue }}</p>
+    </div>
+
+</div>
+
+<hr>
+
+<h2>📊 Order Statistics</h2>
+
+<div class="dashboard-cards">
+    <div class="card">
+        <h3>Total Orders</h3>
+        <p>{{ order_stats.total_orders }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Completed</h3>
+        <p>{{ order_stats.completed }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Pending</h3>
+        <p>{{ order_stats.pending }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Cancelled</h3>
+        <p>{{ order_stats.cancelled }}</p>
+    </div>
+</div>
+<h2>📈 Revenue Last 7 Days</h2>
+<canvas id="dailyRevenueChart" height="100"></canvas>
+
+<h2 style="margin-top:40px;">📅 Monthly Revenue</h2>
+<canvas id="monthlyRevenueChart" height="100"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const dailyCtx = document.getElementById('dailyRevenueChart').getContext('2d');
+
+new Chart(dailyCtx, {
+    type: 'line',
+    data: {
+        labels: {{ daily_labels|safe }},
+        datasets: [{
+            label: 'Revenue (₹)',
+            data: {{ daily_data|safe }},
+            borderColor: '#6366f1',
+            backgroundColor: 'rgba(99,102,241,0.1)',
+            fill: true,
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false }
+        }
+    }
+});
+
+const monthlyCtx = document.getElementById('monthlyRevenueChart').getContext('2d');
+
+new Chart(monthlyCtx, {
+    type: 'bar',
+    data: {
+        labels: {{ monthly_labels|safe }},
+        datasets: [{
+            label: 'Revenue (₹)',
+            data: {{ monthly_data|safe }},
+            backgroundColor: '#6366f1'
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false }
+        }
+    }
+});
+</script>
+{% endblock %}

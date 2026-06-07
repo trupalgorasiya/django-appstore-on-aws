@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Order Confirmation</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: linear-gradient(135deg, #eef2ff, #f8fafc);
+        color: #1e293b;
+    }
+
+    .wrapper {
+        padding: 40px 15px;
+    }
+
+    .container {
+        max-width: 620px;
+        margin: auto;
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        border: 1px solid #e2e8f0;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .header h1 {
+        margin: 0;
+        font-size: 26px;
+        color: #111827;
+    }
+
+    .badge {
+        display: inline-block;
+        margin-top: 12px;
+        padding: 8px 18px;
+        border-radius: 25px;
+        font-size: 12px;
+        background: linear-gradient(90deg, #6366f1, #8b5cf6);
+        color: #ffffff;
+        font-weight: 600;
+        box-shadow: 0 6px 15px rgba(99,102,241,0.3);
+    }
+
+    .success-box {
+        margin-top: 25px;
+        padding: 18px;
+        border-radius: 14px;
+        background: #ecfdf5;
+        border: 1px solid #bbf7d0;
+        color: #166534;
+        font-size: 14px;
+    }
+
+    .section {
+        margin-top: 35px;
+    }
+
+    .section h3 {
+        margin-bottom: 15px;
+        font-size: 18px;
+        color: #111827;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        text-align: left;
+        padding: 10px 0;
+        font-size: 13px;
+        color: #6b7280;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    td {
+        padding: 10px 0;
+        font-size: 14px;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .totals {
+        margin-top: 20px;
+        text-align: right;
+        font-size: 15px;
+        color: #374151;
+    }
+
+    .totals strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 18px;
+        color: #111827;
+    }
+
+    .address-box {
+        margin-top: 15px;
+        padding: 18px;
+        border-radius: 14px;
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+        font-size: 14px;
+        color: #374151;
+    }
+
+    .button {
+        display: inline-block;
+        margin-top: 40px;
+        padding: 14px 28px;
+        background: linear-gradient(90deg, #22c55e, #16a34a);
+        border-radius: 14px;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 15px;
+        box-shadow: 0 8px 20px rgba(34,197,94,0.3);
+    }
+
+    .footer {
+        text-align: center;
+        margin-top: 45px;
+        font-size: 12px;
+        color: #6b7280;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .container {
+            padding: 25px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+<div class="container">
+
+    <div class="header">
+        <h1>Thank You, {{ order.full_name }} 🎉</h1>
+        <div class="badge">Order #{{ order.id }}</div>
+    </div>
+
+    <div class="success-box">
+        Your order has been successfully placed and is now being processed.
+    </div>
+
+    <div class="section">
+        <p><strong>Payment Method:</strong> {{ order.payment_method }}</p>
+        <p><strong>Status:</strong> {{ order.status }}</p>
+    </div>
+
+    <div class="section">
+        <h3>Order Summary</h3>
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price</th>
+            </tr>
+            {% for item in order.items.all %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>₹{{ item.price }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div class="totals">
+            Subtotal: ₹{{ order.subtotal |floatformat:2  }} <br>
+            GST (5%): ₹{{ order.gst |floatformat:2  }}
+            <strong>Total: ₹{{ order.total  |floatformat:2 }}</strong>
+        </div>
+    </div>
+
+    <div class="section">
+        <h3>Shipping Address</h3>
+        <div class="address-box">
+            {{ order.address }}
+        </div>
+    </div>
+
+    <div style="text-align:center;">
+        <a href="http://127.0.0.1:8000/my-orders/" class="button">
+            View Your Orders
+        </a>
+    </div>
+
+    <div class="footer">
+        © 2026 JVJ Enterprise <br>
+        Premium Lighting Solutions 💡
+    </div>
+
+</div>
+</div>
+
+</body>
+</html>

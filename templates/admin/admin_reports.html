@@ -1,0 +1,60 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+
+<h1>📊 Reports</h1>
+
+<form method="GET" class="search-bar">
+
+    <select name="type" required>
+        <option value="">Select Report Type</option>
+        <option value="orders" {% if report_type == "orders" %}selected{% endif %}>Order Report</option>
+        <option value="revenue" {% if report_type == "revenue" %}selected{% endif %}>Revenue Report</option>
+        <option value="products" {% if report_type == "products" %}selected{% endif %}>Product Report</option>
+        <option value="customers" {% if report_type == "customers" %}selected{% endif %}>Customer Report</option>
+    </select>
+
+    <select name="range" required>
+        <option value="">Select Range</option>
+        <option value="1m" {% if range_filter == "1m" %}selected{% endif %}>Last 1 Month</option>
+        <option value="3m" {% if range_filter == "3m" %}selected{% endif %}>Last 3 Months</option>
+        <option value="6m" {% if range_filter == "6m" %}selected{% endif %}>Last 6 Months</option>
+        <option value="12m" {% if range_filter == "12m" %}selected{% endif %}>Last 12 Months</option>
+        <option value="all" {% if range_filter == "all" %}selected{% endif %}>All Time</option>
+    </select>
+
+    <button type="submit" class="primary-btn">Generate</button>
+
+</form>
+
+{% if data %}
+
+<div class="report-actions">
+    <!-- <a href="{% url 'download_report' %}?type={{ report_type }}&range={{ range_filter }}"
+    class="primary-btn">
+    ⬇ Download CSV
+    </a> -->
+    <a href="{% url 'download_report_pdf' %}?type={{ report_type }}&range={{ range_filter }}"
+class="primary-btn">
+🧾 Download PDF
+</a>
+</div>
+<canvas id="reportChart" height="100"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+new Chart(document.getElementById('reportChart'), {
+    type: 'bar',
+    data: {
+        labels: {{ labels|safe }},
+        datasets: [{
+            label: 'Report Data',
+            data: {{ values|safe }},
+            backgroundColor: '#6366f1'
+        }]
+    },
+});
+</script>
+
+{% endif %}
+
+{% endblock %}

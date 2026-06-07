@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LightStore Home</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#f5f7fa,#e4ecff);
+}
+
+/* HEADER STYLE */
+header{
+    width:100%;
+    background:linear-gradient(90deg,#667eea,#764ba2);
+    padding:15px 60px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 4px 15px rgba(0,0,0,0.15);
+}
+
+.logo{
+    color:#facc15;
+    font-size:22px;
+    font-weight:700;
+}
+
+.nav-links{
+    list-style:none;
+    display:flex;
+    align-items:center;
+    gap:35px;
+}
+
+.nav-links li{
+    position:relative;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:white;
+    font-weight:500;
+    transition:0.3s;
+}
+
+.nav-links a:hover{
+    color:#facc15;
+}
+
+.dropdown-menu{
+    position:absolute;
+    top:100%;
+    left:0;
+    background:white;
+    min-width:200px;
+    display:none;
+    flex-direction:column;
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+.dropdown-menu a{
+    color:#333;
+    padding:10px 15px;
+}
+
+.dropdown-menu a:hover{
+    background:#facc15;
+    color:black;
+}
+
+.dropdown:hover .dropdown-menu{
+    display:flex;
+}
+
+.right-section{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.register-btn{
+    padding:8px 18px;
+    background:#facc15;
+    border:none;
+    border-radius:20px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.register-btn:hover{
+    background:white;
+}
+
+.cart{
+    position:relative;
+    cursor:pointer;
+}
+
+.cart img{
+    width:28px;
+}
+
+.cart-count{
+    position:absolute;
+    top:-8px;
+    right:-8px;
+    background:red;
+    color:white;
+    font-size:12px;
+    padding:3px 7px;
+    border-radius:50%;
+}
+
+/* PAGE CONTENT */
+.hero{
+    padding:80px;
+    text-align:center;
+}
+
+.hero h1{
+    font-size:42px;
+    color:#333;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Header will load here -->
+<div id="header"></div>
+
+<div class="hero">
+    <h1>Welcome to LightStore 💡</h1>
+</div>
+
+<script>
+fetch("header.html")
+.then(response => response.text())
+.then(data => {
+    document.getElementById("header").innerHTML = data;
+});
+</script>
+
+</body>
+</html>

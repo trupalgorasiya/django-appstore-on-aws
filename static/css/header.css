@@ -1,0 +1,205 @@
+/* =========================
+   HEADER - Premium Theme
+========================= */
+
+header{
+    width:100%;
+    background:linear-gradient(90deg,#1e293b,#334155);
+    padding:18px 70px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* LOGO */
+.logo{
+    color:#ffffff;
+    font-size:22px;
+    font-weight:600;
+    letter-spacing:1px;
+}
+
+/* NAVIGATION */
+.nav-links{
+    list-style:none;
+    display:flex;
+    align-items:center;
+    gap:40px;
+}
+
+.nav-links li{
+    position:relative;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#e2e8f0;
+    font-weight:500;
+    transition:0.3s ease;
+}
+
+.nav-links a:hover{
+    color:#6366f1;
+}
+
+/* DROPDOWN */
+.dropdown-menu{
+    position:absolute;
+    top:100%;
+    left:0;
+    background:#ffffff;
+    min-width:220px;
+    display:none;
+    flex-direction:column;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 15px 30px rgba(0,0,0,0.1);
+}
+
+.dropdown-menu a{
+    padding:12px 18px;
+    color:#1e293b;
+    font-size:14px;
+}
+
+.dropdown-menu a:hover{
+    background:#f1f5f9;
+    color:#6366f1;
+}
+
+.dropdown:hover .dropdown-menu{
+    display:flex;
+}
+
+/* RIGHT SECTION */
+.right-section{
+    display:flex;
+    align-items:center;
+    gap:25px;
+}
+
+/* REGISTER BUTTON */
+.register-btn{
+    padding:9px 22px;
+    background:#6366f1;
+    color:#ffffff;
+    border:none;
+    border-radius:30px;
+    font-weight:500;
+    cursor:pointer;
+    transition:0.3s ease;
+    text-decoration: none;
+}
+
+.register-btn:hover{
+    background:#4f46e5;
+}
+
+/* CART */
+.cart{
+    position:relative;
+    cursor:pointer;
+}
+
+.cart img{
+    width:26px;
+    filter:invert(1);
+}
+
+.cart-count{
+    position:absolute;
+    top:-6px;
+    right:-8px;
+    background:#6366f1;
+    color:white;
+    font-size:11px;
+    padding:3px 6px;
+    border-radius:50%;
+}
+/* =========================
+   CLICKABLE WELCOME TEXT
+========================= */
+
+.welcome-text {
+    padding: 8px 14px;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #e2e8f0;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.welcome-text:hover {
+    background: rgba(255,255,255,0.12);
+    color: #ffffff;
+}
+
+ .logout-btn{
+        background-color: #828aff;
+    padding: 7px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: black;
+
+}
+
+.logout-btn:hover{
+    background-color: rgb(219, 121, 121);
+}
+/* =========================
+   SEARCH BAR
+========================= */
+
+/* =========================
+   SEARCH BAR - PREMIUM
+========================= */
+
+.search-form {
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(6px);
+    border-radius: 30px;
+    padding: 4px 6px;
+    transition: 0.3s ease;
+}
+
+.search-form:hover {
+    background: rgba(255,255,255,0.18);
+}
+
+.search-form input {
+    border: none;
+    background: transparent;
+    color: white;
+    padding: 8px 12px;
+    outline: none;
+    font-size: 13px;
+    width: 200px;
+}
+
+.search-form input::placeholder {
+    color: rgba(255,255,255,0.7);
+}
+
+.search-form button {
+    border: none;
+    background: #6366f1;
+    color: white;
+    padding: 7px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.3s ease;
+}
+
+.search-form button:hover {
+    background: #4f46e5;
+    transform: scale(1.05);
+}
+
+/* Focus Effect */
+.search-form input:focus {
+    width: 240px;
+}

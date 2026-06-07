@@ -1,0 +1,66 @@
+{% extends "admin/admin_base.html" %}
+
+{% block content %}
+
+<h1>👥 Manage Customers</h1>
+
+<!-- 🔍 Search -->
+<form method="GET" class="search-bar">
+    <input type="text" name="q" placeholder="Search by name, email, phone..." value="{{ query }}">
+    <button type="submit">Search</button>
+</form>
+
+<!-- 📋 User Table -->
+<table class="admin-table">
+    <thead>
+        <tr>
+            <th>Index</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>DOB</th>
+            <!-- <th>Action</th> -->
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ users.start_index|add:forloop.counter0 }}</td>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.email_id }}</td>
+            <td>{{ user.contact_no }}</td>
+            <td>{{ user.dob_date }}</td>
+            <!-- <td>
+                <a href="{% url 'delete_user' user.user_id %}" 
+                   onclick="return confirm('Are you sure?')"
+                   class="delete-btn">Delete</a>
+            </td> -->
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No users found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- 🔢 Pagination -->
+<div class="pagination">
+    {% if users.has_previous %}
+        <a href="?page={{ users.previous_page_number }}&q={{ query }}">Previous</a>
+    {% endif %}
+
+    {% for num in features.paginator.page_range %}
+        {% if features.number == num %}
+            <span>{{ num }}</span>
+        {% else %}
+            <a href="?page={{ num }}&q={{ query }}">{{ num }}</a>
+        {% endif %}
+    {% endfor %}
+    
+    {% if users.has_next %}
+        <a href="?page={{ users.next_page_number }}&q={{ query }}">Next</a>
+    {% endif %}
+</div>
+
+{% endblock %}

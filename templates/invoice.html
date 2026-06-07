@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoice #{{ order.id }}</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f4f6;
+    margin: 0;
+}
+
+/* =============================
+   WRAPPER
+============================= */
+
+.invoice-wrapper {
+    max-width: 900px;
+    margin: 60px auto;
+    background: #ffffff;
+    padding: 50px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+}
+
+/* =============================
+   HEADER TOP
+============================= */
+
+.invoice-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.company-section h1 {
+    margin: 0;
+    font-size: 26px;
+}
+
+.company-section p {
+    margin: 4px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.invoice-title {
+    text-align: right;
+}
+
+.invoice-title h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.invoice-title p {
+    margin: 4px 0;
+    font-size: 14px;
+}
+
+/* =============================
+   BILL SECTION
+============================= */
+
+.billing-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.billing-box {
+    width: 48%;
+    font-size: 14px;
+}
+
+.billing-box h4 {
+    margin-bottom: 10px;
+}
+
+/* =============================
+   TABLE
+============================= */
+
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.invoice-table th {
+    background: #111827;
+    color: white;
+    padding: 12px;
+    font-size: 14px;
+}
+
+.invoice-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* =============================
+   TOTALS
+============================= */
+
+.totals-section {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.totals-box {
+    width: 300px;
+    font-size: 14px;
+}
+
+.totals-box div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.totals-box .grand {
+    font-weight: 700;
+    font-size: 16px;
+    border-top: 2px solid #111827;
+    padding-top: 10px;
+}
+
+/* =============================
+   FOOTER
+============================= */
+
+.invoice-footer {
+    margin-top: 60px;
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+}
+
+/* =============================
+   BUTTON
+============================= */
+
+.print-btn {
+    margin-top: 40px;
+    padding: 12px 24px;
+    background: #111827;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* =============================
+   PRINT
+============================= */
+.back-btn {
+    margin-top: 40px;
+    margin-right: 15px;
+    padding: 12px 24px;
+    background: #e5e7eb;
+    color: #111827;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.back-btn:hover {
+    background: #d1d5db;
+}
+
+/* Hide buttons in print */
+@media print {
+    .print-btn,
+    .back-btn {
+        display: none;
+    }
+}
+@media print {
+    .print-btn {
+        display: none;
+    }
+
+    body {
+        background: white;
+    }
+
+    .invoice-wrapper {
+        margin: 0;
+        box-shadow: none;
+    }
+}
+.totals-box div:not(.grand) {
+    color: #374151;
+}
+</style>
+
+</head>
+<body>
+
+<div class="invoice-wrapper">
+
+    <!-- HEADER -->
+    <div class="invoice-top">
+
+        <div class="company-section">
+            <h1>JVJ Enterprise</h1>
+            <p>Ahmedabad, Gujarat</p>
+            <p>Email: support@lightstore.com</p>
+            <p>Phone: +91 9923454980</p>
+        </div>
+
+        <div class="invoice-title">
+            <h2>INVOICE</h2>
+            <p><strong>Invoice #:</strong> {{ order.id }}</p>
+            <p><strong>Date:</strong> {{ order.created_at|date:"d M Y" }}</p>
+            <p><strong>Payment:</strong> {{ order.payment_method }}</p>
+        </div>
+
+    </div>
+
+    <!-- BILLING -->
+    <div class="billing-section">
+
+        <div class="billing-box">
+            <h4>Bill To:</h4>
+            {{ order.email }} <br>
+            {{ order.phone }} <br>
+            {{ order.address }}
+        </div>
+
+        <div class="billing-box">
+            <h4>Order Details:</h4>
+            Order ID: #{{ order.id }} <br>
+            Status: {{ order.status }} <br>
+            {% if order.razorpay_payment_id %}
+            Payment ID: {{ order.razorpay_payment_id }}
+            {% endif %}
+        </div>
+
+    </div>
+
+    <!-- TABLE -->
+    <table class="invoice-table">
+        <tr>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+        </tr>
+
+        {% for item in order_items %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₹{{ item.price|floatformat:2 }}</td>
+            <td>₹{{ item.subtotal|floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- TOTALS -->
+   <div class="totals-section">
+        <div class="totals-box">
+
+            <div>
+                <span>Subtotal:</span>
+                <span>₹{{ order.subtotal|floatformat:2 }}</span>
+            </div>
+
+            <div>
+                <span>CGST (2.5%):</span>
+                <span>₹{{ order.cgst|floatformat:2 }}</span>
+            </div>
+
+            <div>
+                <span>SGST (2.5%):</span>
+                <span>₹{{ order.sgst|floatformat:2 }}</span>
+            </div>
+
+            <div class="grand">
+                <span>Total:</span>
+                <span>₹{{ order.total|floatformat:2 }}</span>
+            </div>
+
+        </div>
+    </div>
+    <!-- FOOTER -->
+    <div class="invoice-footer">
+        Thank you for shopping with JVJ Enterprise ❤️ <br>
+        This is a system generated invoice.
+    </div>
+
+    <div style="text-align:center; margin-top:40px;">
+
+            <a href="{% url 'order_detail' order.id %}" class="back-btn">
+                ← Back to Order Details
+            </a>
+
+            <button class="print-btn" onclick="window.print()">
+                Download / Print Invoice
+            </button>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<header>
+
+    
+    <div class="logo">
+        JVJ Enterprise
+    </div>
+<!--💡-->
+    <ul class="nav-links">
+        <li><a href="{% url 'home' %}">Home</a></li>
+
+        <li class="dropdown">
+            <a href="#">Products ▾</a>
+            <div class="dropdown-menu">
+    {% for category in categories %}
+        {% if category.category_id %}
+            <a href="{% url 'product_list' category.category_id %}">
+
+                {{ category.name }}
+            </a>
+        {% endif %}
+    {% empty %}
+        <a href="#">No Categories Available</a>
+    {% endfor %}
+</div>
+
+        </li>
+
+        
+        <li><a href="{% url 'about' %}">About Us</a></li>
+        <li><a href="{% url 'faqs' %}">FAQs</a></li>
+    </ul>
+
+    <div class="right-section">
+<form action="{% url 'search' %}" method="GET" class="search-form">
+    <input type="text" name="q" placeholder="Search products..." required>
+    <button type="submit">🔍</button>
+</form>
+    {% if request.session.user_id %}
+        
+        <a href="{% url 'user_details' %}" class="welcome-text">
+          
+            Welcome, {{ request.session.user_name }} 
+        </a>
+
+
+        <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+
+    {% else %}
+
+        <!-- <a href="{% url 'registration' %}" class="register-btn">Register</a> -->
+        <a href="{% url 'login' %}" class="login-btn register-btn">Login</a>
+
+    {% endif %}
+
+    <div class="cart">
+        <a href="{% url 'cart' %}" >
+        <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png">
+        <!-- <div class="cart-count">3</div> -->
+        {% if cart_count > 0 %}
+            <div class="cart-count"> {{ cart_count }} </div>
+        {% endif %}
+        </a>
+    </div>
+
+</div>
+
+
+</header>

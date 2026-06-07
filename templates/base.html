@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}JVJ{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user_details.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/product_list.css' %}">
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+    <link rel="stylesheet" href="{% static 'css/faqs.css' %}">
+    <link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
+</head>
+
+<body>
+
+    {% include 'header.html' %}
+{% if messages %}
+<div class="message-container">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            <span>{{ message }}</span>
+            <button class="close-btn" onclick="this.parentElement.style.display='none';">
+                ×
+            </button>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+    {% block content %}
+    {% endblock %}
+{% include 'footer.html' %}
+<script>
+    setTimeout(function(){
+        document.querySelectorAll('.alert').forEach(function(alert){
+            alert.style.opacity = '0';
+            setTimeout(() => alert.style.display = 'none', 500);
+        });
+    }, 3000);
+</script>
+</body>
+</html>

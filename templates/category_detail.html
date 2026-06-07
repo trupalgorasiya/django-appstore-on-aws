@@ -1,0 +1,27 @@
+<h2>{{ category.name }} Products</h2>
+
+<div class="product-container">
+
+    {% for product in products %}
+        <div class="product-card">
+
+            <img src="{{ product.image.url }}" width="200">
+
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.description }}</p>
+
+            <h4>₹{{ product.price }}</h4>
+
+            {% if product.stock > 0 %}
+                <button>Add to Cart</button>
+            {% else %}
+                <button disabled>Out of Stock</button>
+            {% endif %}
+
+        </div>
+
+    {% empty %}
+        <p>No products available in this category.</p>
+    {% endfor %}
+
+</div>

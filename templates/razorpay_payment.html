@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+<script>
+
+var options = {
+    "key": "{{ razorpay_key }}",
+    "amount": "{{ amount }}",
+    "currency": "INR",
+
+    // 🔥 ADD THIS LINE
+    "name": "JVJ Enterprise",
+
+    "description": "Secure Payment",
+
+    "order_id": "{{ razorpay_order_id }}",
+
+    "handler": function (response){
+        window.location.href = "/payment-success/?payment_id=" 
+            + response.razorpay_payment_id 
+            + "&order_id={{ razorpay_order_id }}";
+    },
+
+    "prefill": {
+        "name": "{{ user.first_name }}",
+        "email": "{{ user.email_id }}",
+        "contact": "{{ user.contact_no }}"
+    },
+
+    "theme": {
+        "color": "#111827"
+    }
+};
+
+var rzp = new Razorpay(options);
+rzp.open();
+
+</script>
+</body>
+</html>

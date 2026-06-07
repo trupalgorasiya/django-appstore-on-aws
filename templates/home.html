@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section class="hero">
+    <img src="{% static 'images/bg.webp' %}" alt="Main Banner">
+
+    <div class="hero-content">
+        <h1>Brighten Your Home With Style</h1>
+        <p>Premium Lighting Collection For Modern Living</p>
+        <a href="#" class="hero-btn">Shop Now</a>
+    </div>
+</section>
+
+<!-- SLIDER -->
+ <!--
+<section class="slider">
+    <div class="slider-container">
+        <div class="slide active">
+            <img src="{% static 'img/slider1.jpg' %}" alt="Slide 1">
+        </div>
+        <div class="slide">
+            <img src="{% static 'img/slider2.jpg' %}" alt="Slide 2">
+        </div>
+        <div class="slide">
+            <img src="{% static 'img/slider3.jpg' %}" alt="Slide 3">
+        </div>
+
+        !-- Navigation Buttons --
+        <button class="prev">&#10094;</button>
+        <button class="next">&#10095;</button>
+    </div>
+</section>-->
+
+<!-- OUR PRODUCTS TITLE -->
+<section class="section">
+    <h2 class="section-title">Our Products</h2>
+
+    <div class="categories">
+
+        {% for category in categories %}
+        <div class="category-card">
+            <a href="{% url 'category_products' category.category_id %}" 
+           style="text-decoration:none; color:inherit;">
+
+            <img src="{{ category.image.url }}" alt="{{ category.name }}">
+            <h3>{{ category.name }}</h3>
+
+        </a>
+        </div>
+        {% empty %}
+        <p>No categories available.</p>
+        {% endfor %}
+
+    </div>
+</section>
+
+
+<!-- BEST SELLING PRODUCTS -->
+<section class="section light-bg">
+    <h2 class="section-title">Best Selling Products</h2>
+
+    <div class="products-grid">
+
+        {% for product in best_products %}
+        <div class="product-card">
+
+            <!-- Wishlist -->
+            <a href="{% url 'add_to_wishlist' product.id %}" class="wishlist-icon">
+                ❤
+            </a>
+
+            <!-- Clickable Image -->
+            <a href="{% url 'product_detail' product.id %}">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            </a>
+
+            <!-- Clickable Title -->
+            <h4>
+                <a href="{% url 'product_detail' product.id %}"
+                   style="text-decoration:none; color:inherit;">
+                   {{ product.name }}
+                </a>
+            </h4>
+
+            <p class="price">₹{{ product.price }}</p>
+
+            {% if product.stock > 0 %}
+                <a href="{% url 'add_to_cart' product.id %}">
+                    <button class="btn">Add to Cart</button>
+                </a>
+            {% else %}
+                <button class="out-stock-btn">Out of Stock</button>
+            {% endif %}
+
+        </div>
+        {% empty %}
+            <p>No best selling products yet.</p>
+        {% endfor %}
+
+    </div>
+</section>
+
+<!-- JS FILE -->
+
+
+{% endblock %}

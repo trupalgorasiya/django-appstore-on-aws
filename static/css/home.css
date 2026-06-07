@@ -1,0 +1,273 @@
+/* =========================
+   GLOBAL RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   HERO SECTION
+========================= */
+
+.hero {
+    position: relative;
+    width: 100%;
+    height: 450px;
+    overflow: hidden;
+}
+
+.hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(65%);
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 8%;
+    transform: translateY(-50%);
+    color: white;
+    max-width: 500px;
+}
+
+.hero-content h1 {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.hero-content p {
+    font-size: 18px;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.hero-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background: #6366f1;
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: 0.3s ease;
+}
+
+.hero-btn:hover {
+    background: #4f46e5;
+}
+
+
+/* =========================
+   SECTION
+========================= */
+
+.section {
+    padding: 80px 8%;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 50px;
+}
+
+.light-bg {
+    background: #f8fafc;
+}
+
+
+/* =========================
+   CATEGORIES (MAX 4)
+========================= */
+
+.categories {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.category-card {
+    width: 250px;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: 0.3s ease;
+}
+
+.category-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.category-card h3 {
+    padding: 20px;
+    font-size: 18px;
+}
+
+.category-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+
+/* =========================
+   PRODUCTS (AUTO CENTER)
+========================= */
+
+.products-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.product-card {
+    width: 250px;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: 0.3s ease;
+
+    position: relative;   /* IMPORTANT */
+}
+
+.product-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.product-card h4 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.product-card .price {
+    color: #6366f1;
+    font-weight: 600;
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+
+/* =========================
+   NAVBAR DROPDOWN (HOVER)
+========================= */
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 200px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    padding: 10px 0;
+    display: none;
+    z-index: 1000;
+}
+
+.dropdown-menu li {
+    list-style: none;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #333;
+    transition: 0.2s;
+}
+
+.dropdown-menu a:hover {
+    background: #f3f4f6;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+
+@media (max-width: 992px) {
+    .hero-content h1 {
+        font-size: 32px;
+    }
+
+    .category-card,
+    .product-card {
+        width: 45%;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero {
+        height: 350px;
+    }
+
+    .hero-content {
+        left: 5%;
+    }
+
+    .hero-content h1 {
+        font-size: 24px;
+    }
+
+    .category-card,
+    .product-card {
+        width: 100%;
+    }
+}
+.wishlist-icon {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+
+    font-size: 20px;
+    color: #ef4444;
+    text-decoration: none;
+
+    background: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: 0.3s ease;
+}
+
+.wishlist-icon:hover {
+    transform: scale(1.1);
+    color: #dc2626;
+}

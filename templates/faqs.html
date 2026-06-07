@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}FAQs - JVJ Enterprise{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/faqs.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="faq-hero">
+    <div class="faq-hero-content">
+        <h1>Frequently Asked Questions</h1>
+        <p>Find answers to common questions about JVJ Enterprise products and services.</p>
+    </div>
+</section>
+
+<section class="faq-section">
+
+    <div class="faq-container">
+
+        <div class="faq-item">
+            <button class="faq-question">
+                What types of lighting products do you offer?
+                <span>+</span>
+            </button>
+            <div class="faq-answer">
+                <p>
+                    We offer LED bulbs, chandeliers, ceiling lights, wall lamps,
+                    decorative lighting, commercial lighting solutions, and more.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                Are your LED products energy efficient?
+                <span>+</span>
+            </button>
+            <div class="faq-answer">
+                <p>
+                    Yes. All our LED products are designed to consume less power
+                    while delivering high brightness and long lifespan.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                Do you provide warranty on products?
+                <span>+</span>
+            </button>
+            <div class="faq-answer">
+                <p>
+                    Most of our lighting products come with a 1-year warranty.
+                    Specific warranty details are mentioned on each product page.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                How long does delivery take?
+                <span>+</span>
+            </button>
+            <div class="faq-answer">
+                <p>
+                    Delivery usually takes 3–7 business days depending on your location.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                Can I return or exchange a product?
+                <span>+</span>
+            </button>
+            <div class="faq-answer">
+                <p>
+                    Yes, we offer easy return and exchange within 7 days
+                    if the product is unused and in original packaging.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+    const faqQuestions = document.querySelectorAll(".faq-question");
+
+    faqQuestions.forEach(btn => {
+        btn.addEventListener("click", function () {
+            const answer = this.nextElementSibling;
+            const symbol = this.querySelector("span");
+
+            if (answer.style.maxHeight) {
+                answer.style.maxHeight = null;
+                symbol.innerHTML = "+";
+            } else {
+                document.querySelectorAll(".faq-answer").forEach(a => a.style.maxHeight = null);
+                document.querySelectorAll(".faq-question span").forEach(s => s.innerHTML = "+");
+
+                answer.style.maxHeight = answer.scrollHeight + "px";
+                symbol.innerHTML = "−";
+            }
+        });
+    });
+</script>
+
+{% endblock %}

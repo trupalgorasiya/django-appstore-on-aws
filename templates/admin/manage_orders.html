@@ -1,0 +1,171 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+
+<h1>📦 Manage Orders</h1>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+<form method="GET" class="search-bar">
+    <input 
+        type="text" 
+        name="q" 
+        placeholder="Search by Order ID, Name, Email..." 
+        value="{{ query }}"
+    >
+    <button type="submit">Search</button>
+</form>
+<table class="admin-table">
+    <thead>
+        <tr>
+            <th>Index</th>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Total</th>
+            <th>Payment</th>
+            <th>Status</th>
+            <th>Update Status</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ orders.start_index|add:forloop.counter0 }}</td>
+            <td>
+                <a href="javascript:void(0);"
+                   onclick="openOrderModal({{ order.id }})"
+                   style="color:#6366f1; font-weight:600;">
+                   #{{ order.id }}
+                </a>
+            </td>
+            <td>{{ order.full_name }}</td>
+            <td>₹{{ order.total }}</td>
+            <td>{{ order.payment_method }}</td>
+
+            <td>
+                <span class="status-badge {{ order.status|lower }}">
+                    {{ order.status }}
+                </span>
+            </td>
+
+            <td>
+                {% if order.status != "Cancelled" and order.status != "Completed" %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="order_id" value="{{ order.id }}">
+
+                    <select name="status" required>
+                        <option value="Pending" {% if order.status == "Pending" %}selected{% endif %}>Pending</option>
+                        <option value="Accepted" {% if order.status == "Accepted" %}selected{% endif %}>Accepted</option>
+                        <option value="Ready" {% if order.status == "Ready" %}selected{% endif %}>Ready</option>
+                        <option value="Completed" {% if order.status == "Completed" %}selected{% endif %}>Completed</option>
+                    </select>
+
+                    <button type="submit" class="primary-btn">Update</button>
+                </form>
+                {% else %}
+                    —
+                {% endif %}
+            </td>
+
+            <td>{{ order.created_at|date:"d M Y" }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="8">No orders found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Pagination -->
+<div class="pagination">
+    {% if orders.has_previous %}
+        <a href="?page={{ orders.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    {% for num in orders.paginator.page_range %}
+        {% if orders.number == num %}
+            <span>{{ num }}</span>
+        {% else %}
+            <a href="?page={{ num }}&q={{ query }}">{{ num }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if orders.has_next %}
+        <a href="?page={{ orders.next_page_number }}">Next</a>
+    {% endif %}
+</div>
+
+<div id="orderModal" class="modal">
+    <div class="modal-content order-modal">
+        <span class="close" onclick="closeOrderModal()">&times;</span>
+
+        <div id="orderDetailsContent"></div>
+    </div>
+</div>
+<script>
+function openOrderModal(orderId) {
+
+    fetch(`/panel/orders/${orderId}/details/`)
+        .then(response => response.json())
+        .then(data => {
+
+            let container = document.getElementById("orderDetailsContent");
+
+            if (!container) {
+                console.error("orderDetailsContent element not found");
+                return;
+            }
+
+            let content = `
+                <div class="order-header">
+                    <h3>Order #${data.order_id}</h3>
+                    <p><strong>Customer:</strong> ${data.customer}</p>
+                    <p><strong>Total:</strong> ₹${data.total}</p>
+                </div>
+                <hr>
+            `;
+
+            data.items.forEach(item => {
+
+                let warrantyBadge = "";
+
+                if (item.warranty_status === "Expired") {
+                    warrantyBadge = `<span class="badge expired">Expired</span>`;
+                } else if (item.warranty_status === "Active") {
+                    warrantyBadge = `<span class="badge active">Active</span>`;
+                }
+
+                content += `
+                    <div class="order-product-card">
+                        <div class="order-product-img">
+                            <img src="${item.image}" alt="${item.product}">
+                        </div>
+                        <div class="order-product-info">
+                            <h4>${item.product}</h4>
+                            <p>Qty: ${item.quantity}</p>
+                            <p>Price: ₹${item.price}</p>
+                            <p>Subtotal: ₹${item.subtotal}</p>
+                            <p>Warranty: ${item.warranty_years ? item.warranty_years + " yrs" : "None"}</p>
+                            <p>Expiry: ${item.warranty_expiry || "-"}</p>
+                            ${warrantyBadge}
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = content;
+
+            document.getElementById("orderModal").classList.add("show");
+            document.body.style.overflow = "hidden";
+        });
+}
+
+function closeOrderModal() {
+    document.getElementById("orderModal").classList.remove("show");
+    document.body.style.overflow = "auto";
+}
+</script>
+{% endblock %}

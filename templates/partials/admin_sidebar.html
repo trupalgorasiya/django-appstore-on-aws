@@ -1,0 +1,22 @@
+<div class="admin-sidebar">
+  <h3>⚙ Admin Panel</h3>
+  <ul>
+    <li><a href="{% url 'admin_dashboard' %}">🏠 Dashboard</a></li>
+    <li><a href="{% url 'manage_users' %}">👥 Manage Customers</a></li>
+    <li><a href="{% url 'manage_reviews' %}">⭐ Manage Ratings</a></li>
+    <li><a href="{% url 'manage_products' %}">📦 Manage Products</a></li>
+
+    <!-- ✅ Updated Stock Icon -->
+    <li><a href="{% url 'manage_stock' %}">📊 Manage Stock</a></li>
+
+    <li><a href="{% url 'manage_features' %}">🧩 Manage Features</a></li>
+    <li><a href="{% url 'manage_categories' %}">📂 Manage Categories</a></li>
+    <li><a href="{% url 'manage_orders' %}">🛒 Manage Orders</a></li>
+
+    <!-- ✅ Updated Report Icon -->
+    <li><a href="{% url 'admin_reports' %}">📈 Reports</a></li>
+
+    <li><a href="{% url 'revenue_dashboard' %}">💰 Revenue</a></li>
+    <li><a href="{% url 'admin_logout' %}">🚪 Logout</a></li>
+  </ul>
+</div>

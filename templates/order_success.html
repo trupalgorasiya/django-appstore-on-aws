@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+.success-wrapper {
+    max-width: 600px;
+    margin: 120px auto;
+    text-align: center;
+    background: white;
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.success-wrapper h2 {
+    color: #16a34a;
+    margin-bottom: 20px;
+}
+
+.success-wrapper p {
+    margin: 10px 0;
+}
+
+.success-btn {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 25px;
+    background: #0f172a;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+}
+</style>
+
+<div class="success-wrapper">
+
+<h2>🎉 Order Placed Successfully!</h2>
+
+<p><strong>Order ID:</strong> {{ order.id }}</p>
+<p><strong>Total Amount:</strong> ₹{{ order.total }}</p>
+<p><strong>Status:</strong> {{ order.status }}</p>
+
+<a href="{% url 'home' %}" class="success-btn">
+Continue Shopping
+</a>
+
+</div>
+
+{% endblock %}

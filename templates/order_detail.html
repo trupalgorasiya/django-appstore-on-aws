@@ -1,0 +1,337 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+
+/* ================================
+   WRAPPER
+================================ */
+
+.order-detail-wrapper {
+    max-width: 1200px;
+    margin: 80px auto;
+    padding: 0 30px;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.order-header h2 {
+    font-size: 26px;
+}
+
+.status-badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Info Section */
+
+.order-info {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    margin-bottom: 40px;
+}
+
+.order-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+    font-size: 14px;
+}
+
+/* Products Section */
+
+.order-products {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.product-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.product-left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.product-left img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.product-info h4 {
+    margin-bottom: 5px;
+    font-size: 15px;
+}
+
+.product-info span {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.product-right {
+    text-align: right;
+    font-size: 14px;
+}
+
+/* Totals */
+
+.order-totals {
+    margin-top: 30px;
+    text-align: right;
+    font-size: 15px;
+}
+
+.order-totals div {
+    margin-bottom: 6px;
+}
+
+.order-totals .grand-total {
+    font-size: 18px;
+    font-weight: 600;
+}
+/* =========================
+   BACK BUTTON
+========================= */
+
+.back-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    background: #f3f4f6;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #374151;
+    transition: 0.3s ease;
+}
+
+.back-btn:hover {
+    background: #e5e7eb;
+}
+.invoice-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: linear-gradient(90deg,#0f172a,#1e293b);
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.invoice-btn:hover {
+    background: linear-gradient(90deg,#1e293b,#334155);
+}
+/* =========================
+   CANCEL BUTTON
+========================= */
+
+.cancel-btn {
+    padding: 10px 20px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.cancel-btn:hover {
+    background: #dc2626;
+}
+
+/* =========================
+   CANCEL POPUP
+========================= */
+
+.cancel-popup {
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.5);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
+}
+
+.cancel-box {
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    width:350px;
+    text-align:center;
+    box-shadow:0 15px 35px rgba(0,0,0,0.15);
+}
+
+.cancel-actions {
+    margin-top:20px;
+    display:flex;
+    justify-content:space-between;
+}
+
+.no-btn {
+    padding:8px 18px;
+    background:#e5e7eb;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.no-btn:hover {
+    background:#d1d5db;
+}
+
+.yes-btn {
+    padding:8px 18px;
+    background:#ef4444;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+}
+
+.yes-btn:hover {
+    background:#dc2626;
+}
+</style>
+
+
+<div class="order-detail-wrapper">
+
+<div class="order-header">
+    <div>
+        <a href="{% url 'order_history' %}" class="back-btn">
+            ← Back to Orders
+        </a>
+        <h2 style="margin-top:10px;">Order #{{ order.id }}</h2>
+    </div>
+
+    <div class="status-badge"
+    {% if order.status == "Completed" %}
+        style="background:#dcfce7;color:#166534;"
+    {% elif order.status == "Pending" %}
+        style="background:#fef3c7;color:#92400e;"
+    {% elif order.status == "Accepted" %}
+        style="background:#dbeafe;color:#1e40af;"
+    {% elif order.status == "Ready" %}
+        style="background:#ede9fe;color:#5b21b6;"
+    {% elif order.status == "Cancelled" %}
+        style="background:#ff0000;color:#ffffff;"   
+    {% endif %}
+>
+    {{ order.status }}
+</div>
+</div>
+
+
+<!-- ORDER INFO -->
+<div class="order-info">
+    <div class="order-info-grid">
+        <div><strong>Order Date:</strong> {{ order.created_at|date:"d M Y, h:i A" }}</div>
+        <div><strong>Payment Method:</strong> {{ order.payment_method }}</div>
+        <div><strong>Email:</strong> {{ order.email }}</div>
+        <div><strong>Phone:</strong> {{ order.phone }}</div>
+        {% if order.razorpay_payment_id %}
+        <div><strong>Payment ID:</strong> {{ order.razorpay_payment_id }}</div>
+        {% endif %}
+        <div style="grid-column: span 2;">
+            <strong>Shipping Address:</strong><br>
+            {{ order.address }}
+        </div>
+    </div>
+</div>
+
+
+<!-- PRODUCTS -->
+<div class="order-products">
+    <h3>Ordered Products</h3>
+
+    {% for item in order_items %}
+    <div class="product-row">
+
+        <div class="product-left">
+            <img src="{{ item.product.image.url }}" alt="">
+            <div class="product-info">
+                <h4>{{ item.product.name }}</h4>
+                <span>Warranty: {{ item.warranty_years }} Years</span><br>
+                <span>Qty: {{ item.quantity }}</span>
+            </div>
+        </div>
+
+        <div class="product-right">
+            ₹{{ item.price|floatformat:2 }} <br>
+            Subtotal: ₹{{ item.subtotal|floatformat:2 }}
+        </div>
+
+    </div>
+    {% endfor %}
+   
+    <div class="order-totals">
+        <div>Subtotal: ₹{{ order.subtotal|floatformat:2 }}</div>
+        <div>CGST (2.5%): ₹{{ order.cgst|floatformat:2 }}</div>
+        <div>SGST (2.5%): ₹{{ order.sgst|floatformat:2 }}</div>
+        <div class="grand-total">Total: ₹{{ order.total|floatformat:2 }}</div>
+    </div>
+ 
+{% if order.status == "Pending" or order.status == "Accepted" %}
+<div style="text-align:center; margin-top:20px;">
+    <button onclick="openCancelPopup()" class="cancel-btn">
+        Cancel Order
+    </button>
+</div>
+{% endif %}
+<div style="text-align:center; margin-top:40px;">
+    <a href="{% url 'invoice_html' order.id %}" class="invoice-btn">
+    View Invoice
+</a>
+</div>
+</div>
+
+</div>
+<!-- CANCEL CONFIRMATION POPUP -->
+<div class="cancel-popup" id="cancelPopup">
+    <div class="cancel-box">
+        <h3>Cancel Order?</h3>
+        <p>Are you sure you want to cancel this order?</p>
+
+        <div class="cancel-actions">
+            <button onclick="closeCancelPopup()" class="no-btn">No</button>
+            <a href="{% url 'cancel_order' order.id %}" class="yes-btn">
+                Yes, Cancel
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+function openCancelPopup() {
+    document.getElementById("cancelPopup").style.display = "flex";
+}
+
+function closeCancelPopup() {
+    document.getElementById("cancelPopup").style.display = "none";
+}
+</script>
+{% endblock %}

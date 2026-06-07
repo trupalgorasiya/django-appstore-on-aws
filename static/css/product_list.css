@@ -1,0 +1,174 @@
+/* ===============================
+   CATEGORY HEADER
+================================= */
+.category-header {
+    text-align: center;
+    padding: 60px 20px 40px;
+}
+
+.category-header h1 {
+    font-size: 40px;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 15px;
+}
+
+.category-header p {
+    max-width: 750px;
+    margin: auto;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #64748b;
+}
+
+/* ===============================
+   PRODUCT GRID
+================================= */
+.product-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 30px 40px 80px;
+
+    display: grid;
+
+    /* Fixed card width */
+    grid-template-columns: repeat(auto-fit, 320px);
+
+    /* Center grid horizontally */
+    justify-content: center;
+
+    gap: 40px;
+}
+
+/* ===============================
+   PRODUCT CARD
+================================= */
+.product-carda {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.product-carda:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 45px rgba(0,0,0,0.08);
+}
+.wishlist{
+    text-decoration: none;
+}
+/* Wishlist */
+.wishlist {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 18px;
+    color: #ef4444;
+    cursor: pointer;
+}
+
+/* Product Image */
+.product-carda img {
+    width: 100%;
+    height: 230px;
+    object-fit: contain;
+    margin-bottom: 20px;
+}
+
+/* Product Title */
+.product-carda h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 10px;
+}
+
+/* Description */
+.product-carda p {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    min-height: 55px;
+}
+
+/* Price */
+.price {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 20px;
+}
+
+/* Quantity + Button Wrapper */
+.quantity-addcart {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Quantity */
+.quantity {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quantity button {
+    width: 35px;
+    height: 35px;
+    border: 1px solid #e5e7eb;
+    background: #f8fafc;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 6px;
+    transition: 0.3s ease;
+}
+
+.quantity button:hover {
+    background: #e2e8f0;
+}
+
+.quantity input {
+    width: 50px;
+    height: 35px;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+    font-size: 15px;
+    margin: 0 8px;
+    border-radius: 6px;
+}
+
+/* Buttons */
+.add-cart {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    background: linear-gradient(90deg,#0f172a,#1e293b);
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.add-cart:hover {
+    background: linear-gradient(90deg,#1e293b,#334155);
+}
+
+.out-stock {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    background: #ef4444; 
+    color: white;
+    font-weight: 500;
+    border: none;
+    cursor: not-allowed;
+}

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/user_details.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="profile-wrapper">
+
+    <!-- LEFT SIDEBAR -->
+    <div class="profile-sidebar">
+
+        <div class="profile-avatar">
+            {{ user.first_name|first|upper }}
+        </div>
+
+        <h3 class="profile-name">{{ user.name }}</h3>
+
+        <ul class="profile-menu">
+            <li><a href="{% url 'order_history' %}">My Orders</a></li>
+            <li><a href="{% url 'wishlist' %}">Wishlist</a></li>
+            <li><a href="{% url 'my_warranties' %}">My Warranties</a></li>
+            <li><a href="{% url 'change_password' %}">Change Password</a></li>
+            <li><a href="{% url 'logout' %}">Log Out</a></li>
+            
+        </ul>
+
+    </div>
+
+
+    <!-- RIGHT CONTENT -->
+    <div class="profile-content">
+
+        <div class="profile-header">
+            <h2>Personal Information</h2>
+            <a href="{% url 'edit_profile' %}" class="edit-btn">Edit Profile</a>
+        </div>
+
+        <div class="profile-info">
+
+            <div class="info-group">
+                <label>Full Name</label>
+                <input type="text" value="{{ user.first_name  }}" disabled>
+            </div>
+
+            <div class="info-group">
+                <label>Email Address</label>
+                <input type="text" value="{{ user.email_id }}" disabled>
+            </div>
+
+            <div class="info-group">
+                <label>Mobile Number</label>
+                <input type="text" value="{{ user.contact_no  }}" disabled>
+            </div>
+
+            <div class="info-group">
+                <label>Date Of Birth</label>
+                <input type="text" value="{{ user.dob_date  }}" disabled>
+            </div>
+
+            <div class="info-group">
+                <label>Address</label>
+                <input type="text" value="{{ user.address }}" disabled>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

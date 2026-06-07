@@ -1,0 +1,477 @@
+/* ===== Reset ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ===== Layout ===== */
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh;
+    background: #f8fafc;
+}
+
+/* ===== Sidebar ===== */
+.admin-sidebar {
+    width: 260px;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #1e293b, #334155);
+    padding: 30px 20px;
+    color: white;
+}
+
+/* Sidebar Title */
+.admin-sidebar h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 35px;   /* 👈 space below title */
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+/* Menu List */
+.admin-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Each Menu Item */
+.admin-sidebar ul li {
+    margin-bottom: 12px;   /* 👈 spacing between items */
+}
+
+/* Menu Links */
+.admin-sidebar ul li a {
+    text-decoration: none;
+    color: #cbd5e1;
+    display: block;
+    padding: 12px 15px;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+/* Hover Effect */
+.admin-sidebar ul li a:hover {
+    background: #6366f1;
+    color: white;
+    transform: translateX(4px);
+}
+
+/* ===== Main Content ===== */
+.admin-content {
+    flex: 1;
+    padding: 40px;
+}
+
+/* ===== Dashboard ===== */
+.dashboard-header {
+    margin-bottom: 30px;
+}
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.card p {
+    font-size: 22px;
+    font-weight: bold;
+    color: #6366f1;
+}
+
+/* ===== Page Title ===== */
+h1 {
+    margin-bottom: 25px;
+}
+
+/* ===== Search Bar ===== */
+.search-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.search-bar button {
+    padding: 10px 18px;
+    background: #6366f1;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    opacity: 0.9;
+}
+
+/* ===== Table ===== */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 14px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+.admin-table th {
+    background: #f1f5f9;
+}
+
+.admin-table tr:hover {
+    background: #f9fafb;
+}
+
+/* ===== Delete Button ===== */
+.delete-btn {
+    background: #ef4444;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.delete-btn:hover {
+    background: #dc2626;
+}
+
+/* ===== Pagination ===== */
+/* ===== Premium Pagination ===== */
+.pagination {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagination a,
+.pagination span {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+/* Page Links */
+.pagination a {
+    background: white;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+}
+
+/* Hover */
+.pagination a:hover {
+    background: #6366f1;
+    color: white;
+    border-color: #6366f1;
+}
+
+/* Current Page */
+.pagination span {
+    background: #6366f1;
+    color: white;
+    font-weight: 600;
+}
+/* Review Rating Styling */
+.admin-table td span {
+    color: #f59e0b;
+}
+.primary-btn {
+    background: #6366f1;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.primary-btn:hover {
+    background: #4f46e5;
+}
+
+.edit-btn {
+    background: #f59e0b;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+.delete-btn {
+    background: #ef4444;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+/* ===== Modal Background ===== */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+}
+
+/* When modal is active */
+.modal.show {
+    display: flex;
+}
+
+/* ===== Modal Box ===== */
+.modal-content {
+    background: #fff;
+    width: 100%;
+    max-width: 650px;
+    border-radius: 16px;
+    padding: 30px;
+
+    max-height: 90vh;
+    overflow-y: auto;
+
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+/* Smooth scrollbar */
+.modal-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: #6366f1;
+    border-radius: 10px;
+}
+.modal-content input,
+.modal-content textarea {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+    font-size: 22px;
+}
+.alert {
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.alert.error {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.alert.success {
+    background: #dcfce7;
+    color: #166534;
+}
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.image-card {
+    background: white;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    position: relative;
+}
+
+.image-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.primary-image {
+    border: 2px solid #6366f1;
+}
+
+.badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #6366f1;
+    color: white;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 6px;
+}
+
+.image-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.status-badge {
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+}
+
+.status-badge.pending { background: #f59e0b; color:white;}
+.status-badge.accepted { background: #3b82f6; color:white;}
+.status-badge.ready { background: #6366f1;color:white; }
+.status-badge.completed { background: #10b981; color:white;}
+.status-badge.cancelled { background: #ef4444;color:white; }
+/* ===== Order Modal Styling ===== */
+
+.order-modal {
+    max-width: 800px;
+}
+
+.order-header h3 {
+    margin-bottom: 5px;
+}
+
+.order-product-card {
+    display: flex;
+    gap: 20px;
+    background: #f8fafc;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.order-product-img img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.order-product-info h4 {
+    margin-bottom: 5px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+.badge.active {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.badge.expired {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+/* ===== Report Page Styling ===== */
+
+.report-card {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    margin-bottom: 25px;
+}
+
+.report-filters {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.report-filters select {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    font-size: 14px;
+}
+
+.report-actions {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: white;
+    padding: 8px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(99,102,241,0.3);
+}
+
+/* Chart Card */
+.report-chart-card {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}

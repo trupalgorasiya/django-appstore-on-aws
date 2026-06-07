@@ -1,0 +1,211 @@
+/* =========================
+   AUTH PAGES (LOGIN / REGISTER / OTP)
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #e0e7ff, #f1f5ff, #f8fafc);
+    min-height: 100vh;
+}
+
+
+/* =========================
+   AUTH CONTAINER
+========================= */
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+
+/* =========================
+   AUTH BOX (PREMIUM GLASS)
+========================= */
+
+.auth-box {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(14px);
+    width: 100%;
+    max-width: 450px;
+    padding: 50px 40px;
+    border-radius: 28px;
+    box-shadow: 0 30px 60px rgba(99,102,241,0.15);
+    transition: all 0.4s ease;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.6);
+}
+
+.auth-box:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 40px 80px rgba(99,102,241,0.25);
+}
+
+.auth-box h2 {
+    text-align: center;
+    margin-bottom: 35px;
+    font-weight: 700;
+    font-size: 26px;
+    color: #111827;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.auth-box form {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================
+   INPUTS
+========================= */
+
+.auth-box input,
+.auth-box textarea {
+    padding: 16px 18px;
+    margin-bottom: 20px;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    font-size: 15px;
+    background: #f9fafb;
+    transition: all 0.3s ease;
+}
+
+.auth-box input:focus,
+.auth-box textarea:focus {
+    outline: none;
+    border-color: #6366f1;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(99,102,241,0.15);
+}
+
+.auth-box textarea {
+    resize: none;
+    height: 90px;
+}
+
+
+/* =========================
+   FORGOT PASSWORD
+========================= */
+
+.forgot-password {
+    text-align: right;
+    margin-top: -5px;
+    margin-bottom: 22px;
+}
+
+.forgot-password a {
+    font-size: 14px;
+    color: #4f46e5;
+    font-weight: 500;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.forgot-password a:hover {
+    color: #7c3aed;
+    text-decoration: underline;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.auth-btn {
+    background: linear-gradient(135deg, #6366f1, #7c3aed);
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 15px 30px rgba(99,102,241,0.25);
+}
+
+.auth-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px rgba(99,102,241,0.35);
+}
+
+
+/* =========================
+   AUTH LINKS (REGISTER ETC.)
+========================= */
+
+.auth-links {
+    text-align: center;
+    margin-top: 22px;
+    font-size: 14px;
+    color: #374151;
+}
+
+.auth-links a {
+    color: #7c3aed;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================
+   MESSAGES
+========================= */
+
+.message {
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.message.success {
+    background: #ecfdf5;
+    color: #065f46;
+    border-left: 5px solid #10b981;
+}
+
+.message.error {
+    background: #fef2f2;
+    color: #991b1b;
+    border-left: 5px solid #ef4444;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 480px) {
+    .auth-box {
+        padding: 35px 25px;
+    }
+
+    .auth-box h2 {
+        font-size: 22px;
+    }
+
+    .auth-btn {
+        padding: 14px;
+    }
+}

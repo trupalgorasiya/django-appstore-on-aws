@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Order Status Update</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: linear-gradient(135deg, #eef2ff, #f8fafc);
+        color: #1f2937;
+    }
+
+    .wrapper {
+        padding: 40px 15px;
+    }
+
+    .container {
+        max-width: 620px;
+        margin: auto;
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+        border: 1px solid #e5e7eb;
+    }
+
+    .header {
+        text-align: center;
+    }
+
+    .header h1 {
+        margin: 0;
+        font-size: 26px;
+        color: #111827;
+    }
+
+    .order-id {
+        display: inline-block;
+        margin-top: 14px;
+        padding: 8px 18px;
+        border-radius: 30px;
+        font-size: 12px;
+        background: linear-gradient(90deg, #6366f1, #8b5cf6);
+        color: #ffffff;
+        font-weight: 600;
+        box-shadow: 0 6px 15px rgba(99,102,241,0.3);
+    }
+
+    .status-card {
+        margin-top: 35px;
+        padding: 25px;
+        text-align: center;
+        border-radius: 18px;
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+    }
+
+    .status-label {
+        font-size: 12px;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .status-value {
+        margin-top: 12px;
+        font-size: 26px;
+        font-weight: bold;
+    }
+
+    .section {
+        margin-top: 40px;
+    }
+
+    .section h3 {
+        margin-bottom: 15px;
+        font-size: 18px;
+        color: #111827;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        text-align: left;
+        padding: 10px 0;
+        font-size: 13px;
+        color: #6b7280;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    td {
+        padding: 10px 0;
+        font-size: 14px;
+        border-bottom: 1px solid #f1f5f9;
+        color: #374151;
+    }
+
+    .totals {
+        margin-top: 20px;
+        text-align: right;
+        font-size: 15px;
+        color: #374151;
+    }
+
+    .totals strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 18px;
+        color: #111827;
+    }
+
+    .address {
+        background: #f8fafc;
+        padding: 18px;
+        border-radius: 16px;
+        border: 1px solid #e5e7eb;
+        font-size: 14px;
+        color: #374151;
+    }
+
+    .button {
+        display: inline-block;
+        margin-top: 40px;
+        padding: 14px 28px;
+        background: linear-gradient(90deg, #22c55e, #16a34a);
+        border-radius: 16px;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 15px;
+        box-shadow: 0 8px 20px rgba(34,197,94,0.25);
+    }
+
+    .footer {
+        text-align: center;
+        margin-top: 45px;
+        font-size: 12px;
+        color: #6b7280;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .container {
+            padding: 25px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+<div class="container">
+
+    <div class="header">
+        <h1>Order Status Updated</h1>
+        <div class="order-id">Order #{{ order.id }}</div>
+    </div>
+
+    <div class="status-card">
+        <div class="status-label">Current Status</div>
+
+        <div class="status-value"
+            {% if order.status == "Completed" %}
+                style="color:#16a34a;"
+            {% elif order.status == "Pending" %}
+                style="color:#f59e0b;"
+            {% elif order.status == "Accepted" %}
+                style="color:#2563eb;"
+            {% elif order.status == "Ready" %}
+                style="color:#7c3aed;"
+            {% elif order.status == "Cancelled" %}
+                style="color:#dc2626;"
+            {% else %}
+                style="color:#111827;"
+            {% endif %}
+        >
+            {{ order.status }}
+        </div>
+    </div>
+
+    <div class="section">
+        <h3>Order Summary</h3>
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price</th>
+            </tr>
+            {% for item in order.items.all %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>₹{{ item.price }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div class="totals">
+            Subtotal: ₹{{ order.subtotal }} <br>
+            GST (5%): ₹{{ order.gst }}
+            <strong>Total: ₹{{ order.total }}</strong>
+        </div>
+    </div>
+
+    <div class="section">
+        <h3>Shipping Address</h3>
+        <div class="address">
+            {{ order.address }}
+        </div>
+    </div>
+
+    <div style="text-align:center;">
+        <a href="http://127.0.0.1:8000/my-orders/" class="button">
+            View Your Orders
+        </a>
+    </div>
+
+    <div class="footer">
+        © 2026 JVJ Enterprise <br>
+        Premium Lighting Solutions 💡
+    </div>
+
+</div>
+</div>
+
+</body>
+</html>

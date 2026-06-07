@@ -1,0 +1,129 @@
+/* =========================
+   USER PROFILE PAGE
+========================= */
+
+.profile-wrapper {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    display: flex;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.profile-sidebar {
+    width: 300px;
+    background: linear-gradient(180deg, #1e293b, #334155);
+    padding: 40px 25px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.profile-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #6366f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 600;
+    margin: 0 auto 15px;
+}
+
+.profile-name {
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+
+.profile-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.profile-menu li {
+    margin-bottom: 15px;
+}
+
+.profile-menu a {
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.08);
+    color: #e2e8f0;
+    transition: 0.3s ease;
+}
+
+.profile-menu a:hover {
+    background: #6366f1;
+    color: #ffffff;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.profile-content {
+    flex: 1;
+    padding: 40px;
+    background: #f8fafc;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.profile-header h2 {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* Edit Button */
+.edit-btn {
+    padding: 8px 18px;
+    background: #6366f1;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.edit-btn:hover {
+    background: #4f46e5;
+}
+
+/* Info Fields */
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.info-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #475569;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.info-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+}

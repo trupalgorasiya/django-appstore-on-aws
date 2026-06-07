@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+</head>
+<body>
+
+<div class="admin-wrapper">
+
+    {% include "partials/admin_sidebar.html" %}
+
+    <div class="admin-content">
+        <!-- {% if messages %}
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %} -->
+        {% block content %}{% endblock %}
+    </div>
+
+</div>
+
+</body>
+</html>

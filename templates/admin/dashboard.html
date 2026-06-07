@@ -1,0 +1,116 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+
+<div class="dashboard-header">
+    <h1>📊 Admin Dashboard</h1>
+</div>
+
+<!-- 🔢 Stats Cards -->
+<div class="dashboard-cards">
+    <div class="card">
+        <h3>Total Customers</h3>
+        <p>{{ total_customers }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Total Products</h3>
+        <p>{{ total_products }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Total Orders</h3>
+        <p>{{ total_orders }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Total Revenue</h3>
+        <p>₹{{ total_revenue }}</p>
+    </div>
+
+    <div class="card">
+        <h3>This Month Revenue</h3>
+        <p>₹{{ monthly_revenue }}</p>
+    </div>
+</div>
+
+<hr style="margin:40px 0;">
+
+<!-- 🏆 Best Selling -->
+<h2>🏆 Best Selling Products</h2>
+<table class="admin-table">
+    <tr>
+        <th>Product</th>
+        <th>Units Sold</th>
+    </tr>
+    {% for item in best_selling %}
+    <tr>
+        <td>{{ item.product__name }}</td>
+        <td>{{ item.total_sold }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="2">No sales yet.</td></tr>
+    {% endfor %}
+</table>
+
+<br>
+
+<!-- 📈 Best Performing -->
+<h2>📈 Best Performing Products (Revenue)</h2>
+<table class="admin-table">
+    <tr>
+        <th>Product</th>
+        <th>Total Revenue</th>
+    </tr>
+    {% for item in best_performing %}
+    <tr>
+        <td>{{ item.product__name }}</td>
+        <td>₹{{ item.total_revenue }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="2">No data.</td></tr>
+    {% endfor %}
+</table>
+
+<br>
+
+<!-- 🚨 Low Stock -->
+<h2>🚨 Low Stock Alerts</h2>
+<table class="admin-table">
+    <tr>
+        <th>Product</th>
+        <th>Stock Left</th>
+    </tr>
+    {% for product in low_stock %}
+    <tr>
+        <td>{{ product.name }}</td>
+        <td style="color:red; font-weight:600;">{{ product.stock }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="2">All products well stocked.</td></tr>
+    {% endfor %}
+</table>
+
+<br>
+
+<!-- 📦 Recent Orders -->
+<h2>📦 Recent Orders</h2>
+<table class="admin-table">
+    <tr>
+        <th>Order ID</th>
+        <th>Customer</th>
+        <th>Total</th>
+        <th>Status</th>
+    </tr>
+    {% for order in recent_orders %}
+    <tr>
+        <td>#{{ order.id }}</td>
+        <td>{{ order.full_name }}</td>
+        <td>₹{{ order.total }}</td>
+        <td>{{ order.status }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4">No orders found.</td></tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

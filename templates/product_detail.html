@@ -1,0 +1,621 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ product.name }}</title>
+
+    <style>
+
+
+
+/* ===============================
+   PRODUCT DETAIL WRAPPER
+================================= */
+.product-detail-wrapper {
+    padding: 70px 40px;
+}
+
+.product-detail-container {
+    max-width: 1300px;
+    margin: auto;
+    display: flex;
+    gap: 80px;
+    align-items: flex-start;
+}
+
+/* ===============================
+   PRODUCT IMAGE SECTION UPDATED
+================================= */
+
+
+
+
+/* INFO SECTION */
+.product-info-section {
+    flex: 1;
+}
+
+.product-title {
+    font-size: 38px;
+    margin-bottom: 15px;
+    color: #0f172a;
+}
+.thumbnail-container {
+    overflow-x: auto;
+}
+.rating {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #f59e0b;
+}
+
+.rating span {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.product-price {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #111827;
+}
+
+.product-description {
+    color: #64748b;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+.stock-status {
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.in-stock {
+    color: #10b981;
+}
+
+.out-stocka {
+    color: #ef4444;
+}
+
+/* Quantity */
+.quantity-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.quantity-wrapper button {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #e5e7eb;
+    background: #f1f5f9;
+    cursor: pointer;
+}
+
+.quantity-wrapper input {
+    width: 60px;
+    height: 40px;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+}
+
+/* Buttons */
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.add-cart-btn {
+    flex: 1;
+    padding: 14px;
+    border-radius: 12px;
+    background: linear-gradient(90deg,#0f172a,#1e293b);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.add-cart-btn:hover {
+    background: linear-gradient(90deg,#1e293b,#334155);
+}
+
+.wishlist-btn {
+    padding: 14px 20px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    background: white;
+    cursor: pointer;
+    text-decoration: none;
+    color: #111827;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.wishlist-btn:hover {
+    background: #f1f5f9;
+}
+
+/* Inquiry */
+.inquiry-btn {
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 1px solid #6366f1;
+    color: #6366f1;
+    background: white;
+    cursor: pointer;
+}
+
+/* Features */
+.product-features {
+    margin-top: 25px;
+    color: #475569;
+    line-height: 1.9;
+}
+
+/* ===============================
+   REVIEW SECTION
+================================= */
+.review-section {
+    max-width: 1200px;
+    margin: 100px auto;
+    padding: 0 40px;
+}
+
+.review-section h2 {
+    font-size: 28px;
+    margin-bottom: 40px;
+}
+
+.review-summary {
+    display: flex;
+    gap: 60px;
+    margin-bottom: 60px;
+}
+
+.rating-overview h1 {
+    font-size: 50px;
+}
+
+.rating-bars {
+    flex: 1;
+}
+
+.bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.bar {
+    flex: 1;
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.fill {
+    height: 100%;
+    background: #f59e0b;
+}
+
+/* ===============================
+   PRODUCT IMAGE SECTION FINAL FIX
+================================= */
+
+.product-image-sectiona {
+    width: 600px;
+  
+}
+
+/* Main Image */
+.main-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;          /* Perfect square ratio */
+    height: auto !important;      /* Override fixed height */
+    padding: 30px;                /* Give breathing space */
+    background: #ffffff;          /* Clean white background */
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+}
+
+.main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;          /* No cropping */
+    transition: transform 0.4s ease;
+}
+
+/* Thumbnail Container */
+.thumbnail-container {
+    margin-top: 20px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;   /* 👈 THIS CENTERS IF 1 OR 2 IMAGES */
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 8px;
+}
+
+/* Hide scrollbar (optional clean look) */
+.thumbnail-container::-webkit-scrollbar {
+    height: 6px;
+}
+
+.thumbnail-container::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 10px;
+}
+.main-image:hover img {
+    transform: scale(1.05);
+}
+/* Thumbnail */
+.thumbnail {
+    flex: 0 0 auto;  /* 👈 Prevent stretching */
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.thumbnail:hover {
+    transform: scale(1.05);
+    border-color: #6366f1;
+}
+
+.thumbnail.active {
+    border-color: #0f172a;
+    transform: scale(1.08);
+}
+@media (max-width: 992px) {
+    .product-detail-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product-image-sectiona {
+        width: 100%;
+    }
+
+    .main-image {
+        height: 400px;
+    }
+}
+/* Review Cards */
+.review-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+/* Add Review */
+.add-review form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 500px;
+}
+
+.add-review input,
+.add-review select,
+.add-review textarea {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+.add-review button {
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(90deg,#0f172a,#1e293b);
+    color: white;
+    cursor: pointer;
+}
+.warranty-info {
+    color: #10b981;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+    </style>
+</head>
+<body>
+
+<section class="product-detail-wrapper">
+
+    <div class="product-detail-container">
+
+        <!-- LEFT SIDE IMAGE -->
+        <div class="product-image-sectiona">
+
+            <!-- Main Image -->
+            <div class="main-image">
+                {% if images %}
+                    <img id="mainProductImage"
+                        src="{{ images.0.image.url }}"
+                        alt="{{ product.name }}">
+                {% else %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% endif %}
+            </div>
+
+            <!-- Thumbnail Images -->
+            <div class="thumbnail-container">
+                {% for img in images %}
+                    <img src="{{ img.image.url }}"
+                        onclick="changeImage(this)"
+                        class="thumbnail {% if forloop.first %}active{% endif %}">
+                {% endfor %}
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE DETAILS -->
+        <div class="product-info-section">
+
+            <h1 class="product-title">{{ product.name }}</h1>
+
+           <div class="rating">
+
+    {% if total_reviews > 0 %}
+
+        <strong>{{ average_rating }}</strong>
+
+        {% for i in "12345" %}
+            {% if forloop.counter <= average_rating %}
+                ⭐
+            {% else %}
+                ☆
+            {% endif %}
+        {% endfor %}
+
+        <span>({{ total_reviews }} Review{{ total_reviews|pluralize }})</span>
+
+    {% else %}
+        ☆☆☆☆☆ <span>(No reviews yet)</span>
+    {% endif %}
+
+</div>       
+
+            <div class="product-price">
+                ₹{{ product.price }}
+            </div>
+
+            <p class="product-description">
+                {{ product.description }}
+            </p>
+
+            {% if product.stock > 0 %}
+                <div class="stock-status in-stock">✔ In Stock</div>
+            {% else %}
+                <div class="stock-status out-stocka">✖ Out of Stock</div>
+            {% endif %}
+            <!-- warrenty added  -->
+            {% if product.warranty_years %}
+                <p class="warranty-info">
+                    ✔ {{ product.warranty_years }} Year Warranty
+                </p>
+            {% endif %}
+            <!-- <div class="quantity-wrapper">
+                <button>-</button>
+                <input type="text" value="1">
+                <button>+</button>
+            </div> -->
+
+            <div class="button-group">
+                <a href="{% url 'add_to_cart' product.id %}">
+                    <button class="add-cart-btn">Add to Cart</button>
+                </a>
+                <a href="{% url 'add_to_wishlist' product.id %}" class="wishlist-btn">
+                    ❤ Wishlist
+                </a>
+            </div>
+
+            <!-- <button class="inquiry-btn">Make Inquiry</button> -->
+
+            {% if product.features.all %}
+            <ul class="product-features">
+                {% for feature in product.features.all %}
+                    <li> {{ feature.name }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- REVIEW SECTION -->
+<section class="review-section">
+
+<h2>Customer Reviews</h2>
+
+<div class="review-summary">
+
+    <div class="rating-overview">
+        <h1>{{ average_rating }}</h1>
+
+        <div>
+            {% for i in "12345" %}
+                {% if forloop.counter <= average_rating %}
+                    ⭐
+                {% else %}
+                    ☆
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <p>Based on {{ total_reviews }} reviews</p>
+    </div>
+
+    <div class="rating-bars">
+
+        {% for star in stars %}
+        <div class="bar-row">
+            <span>{{ star }} Star</span>
+
+            <div class="bar">
+                <div class="fill"
+                     style="width:
+                     {% if total_reviews > 0 %}
+                         {% widthratio rating_counts|get_item:star total_reviews 100 %}%
+                     {% else %}
+                         0%
+                     {% endif %}">
+                </div>
+            </div>
+
+            <span>{{ rating_counts|get_item:star }}</span>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% for review in reviews %}
+<div class="review-card">
+
+    <div class="review-top">
+        <h4 class="review-user">{{ review.user.first_name }}</h4>
+
+        {% if request.session.user_id == review.user.user_id %}
+        <div class="review-actions">
+            <button class="edit-btn"
+                    onclick="openEditModal('{{ review.id }}','{{ review.rating }}','{{ review.comment|escapejs }}')">
+                Edit
+            </button>
+
+            <a href="{% url 'delete_review' review.id %}"
+               class="delete-btn"
+               onclick="return confirm('Delete this review?')">
+               Delete
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="review-stars">
+        {% for i in "12345" %}
+            {% if forloop.counter <= review.rating %}
+                ⭐
+            {% else %}
+                ☆
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <p class="review-comment">{{ review.comment }}</p>
+
+</div>
+{% empty %}
+<p>No reviews yet.</p>
+{% endfor %}
+
+<div class="add-review">
+<h3>Write a Review</h3>
+
+{% if has_ordered %}
+    {% if not user_reviewed %}
+    <form method="POST">
+        {% csrf_token %}
+
+        <select name="rating" required>
+            <option value="">Select Rating</option>
+            <option value="5">⭐⭐⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐☆</option>
+            <option value="3">⭐⭐⭐☆☆</option>
+            <option value="2">⭐⭐☆☆☆</option>
+            <option value="1">⭐☆☆☆☆</option>
+        </select>
+
+        <textarea name="comment" placeholder="Write your review..." required></textarea>
+
+        <button type="submit">Submit Review</button>
+    </form>
+    {% else %}
+        <p>You have already reviewed this product.</p>
+    {% endif %}
+{% else %}
+    <p>Only customers who purchased this product can leave a review.</p>
+{% endif %}
+
+</div>
+
+</section>
+<!-- EDIT REVIEW MODAL -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeEditModal()">×</span>
+
+        <h3>Edit Your Review</h3>
+
+        <form method="POST" id="editForm">
+            {% csrf_token %}
+
+            <select name="rating" id="editRating" required>
+                <option value="5">⭐⭐⭐⭐⭐</option>
+                <option value="4">⭐⭐⭐⭐☆</option>
+                <option value="3">⭐⭐⭐☆☆</option>
+                <option value="2">⭐⭐☆☆☆</option>
+                <option value="1">⭐☆☆☆☆</option>
+            </select>
+
+            <textarea name="comment" id="editComment" required></textarea>
+
+            <button type="submit" class="modal-submit-btn">Update Review</button>
+        </form>
+    </div>
+</div>
+<script>
+function openEditModal(id, rating, comment) {
+    document.getElementById("editModal").style.display = "flex";
+    document.getElementById("editRating").value = rating;
+    document.getElementById("editComment").value = comment;
+    document.getElementById("editForm").action = "/review/edit/" + id + "/";
+}
+
+function closeEditModal() {
+    document.getElementById("editModal").style.display = "none";
+}
+
+function changeImage(element) {
+    const mainImage = document.getElementById("mainProductImage");
+    mainImage.src = element.src;
+
+    // remove active class from all thumbnails
+    document.querySelectorAll('.thumbnail').forEach(img => {
+        img.classList.remove('active');
+    });
+
+    // add active to clicked
+    element.classList.add('active');
+}
+</script>
+</body>
+</html>
+{% endblock %}

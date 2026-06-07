@@ -1,0 +1,61 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <!-- CATEGORY HEADER -->
+    <section class="category-header">
+        <h1>{{ category.name }}</h1>
+        <p>{{ category.description }}</p>
+    </section>
+
+    <!-- PRODUCT SECTION -->
+    <section class="product-container">
+
+        {% for product in products %}
+        <div class="product-carda">
+            <a href="{% url 'add_to_wishlist' product.id %}" class="wishlist">
+                ❤
+            </a>
+           
+            <a href="{% url 'product_detail' product.id %}">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            </a>
+
+            <h3>
+                <a href="{% url 'product_detail' product.id %}" style="text-decoration:none; color:inherit;">
+                    {{ product.name }}
+                </a>
+            </h3>
+            <p>{{ product.description }}</p>
+
+            
+            <div class="price">₹{{ product.price }}</div>
+
+<div class="quantity-addcart">
+    {% if product.stock > 0 %}
+        <!-- <div class="quantity">
+            <button>-</button>
+            <input type="text" value="1">
+            <button>+</button>
+        </div> -->
+        <a href="{% url 'add_to_cart' product.id %}">
+            <button class="add-cart">Add to Cart</button>
+        </a>
+    {% else %}
+        <button class="out-stock">Out of Stock</button>
+    {% endif %}
+</div>
+
+        </div>
+        {% empty %}
+            <h2 style="text-align:center;">No Products Available</h2>
+        {% endfor %}
+
+    </section>
+
+
+
+{% endblock %}

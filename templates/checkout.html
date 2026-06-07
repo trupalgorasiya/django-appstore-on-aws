@@ -1,0 +1,291 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+
+/* ===============================
+   WRAPPER
+================================= */
+.checkout-wrapper {
+    max-width: 1300px;
+    margin: 80px auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 50px;
+    padding: 0 40px;
+}
+
+/* ===============================
+   LEFT SECTION
+================================= */
+.checkout-form {
+    background: #ffffff;
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+}
+
+.checkout-form h2 {
+    margin-bottom: 30px;
+    font-size: 24px;
+    color: #111827;
+}
+
+/* Inputs */
+.input-group {
+    margin-bottom: 18px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: #6b7280;
+}
+
+.checkout-form input,
+.checkout-form textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    background: #f9fafb;
+}
+
+.checkout-form textarea {
+    min-height: 110px;
+    resize: none;
+}
+
+/* Checkbox */
+.checkbox-wrapper {
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Payment */
+.payment-options {
+    margin: 25px 0;
+    padding: 20px;
+    background: #f3f4f6;
+    border-radius: 12px;
+}
+
+.payment-options label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+/* Button */
+.place-order-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(90deg,#0f172a,#1e293b);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.place-order-btn:hover {
+    background: linear-gradient(90deg,#1e293b,#334155);
+}
+
+/* ===============================
+   RIGHT SECTION (SUMMARY)
+================================= */
+.order-summary {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+    height: fit-content;
+    position: sticky;
+    top: 120px;
+}
+
+.order-summary h2 {
+    margin-bottom: 25px;
+    font-size: 22px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+.summary-total {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+.summary-total {
+    background: #f9fafb;
+    padding: 20px;
+    border-radius: 10px;
+}
+.summary-total span:first-child {
+    color: #111827;
+}
+
+.summary-total span:last-child {
+    color: #0f172a;
+}
+</style>
+
+
+<div class="checkout-wrapper">
+
+<!-- ===============================
+     LEFT SIDE
+================================= -->
+<div class="checkout-form">
+
+<h2>Shipping Details</h2>
+
+<form method="POST">
+{% csrf_token %}
+
+<div class="input-group">
+<label>Full Name</label>
+<input type="text" value="{{ user.first_name }}" readonly>
+</div>
+
+<div class="input-group">
+<label>Email</label>
+<input type="email" value="{{ user.email_id }}" readonly>
+</div>
+
+<div class="input-group">
+<label>Mobile Number</label>
+<input type="text" value="{{ user.contact_no }}" readonly>
+</div>
+
+<div class="input-group">
+<label>Delivery Address</label>
+<textarea name="main_address" id="mainAddress" required>{{ user.address }}</textarea>
+</div>
+
+<div class="checkbox-wrapper">
+<input type="checkbox" id="differentAddress" name="different_address">
+<label for="differentAddress">Ship to different address</label>
+</div>
+
+<div id="newAddressBox" style="display:none;">
+<div class="input-group">
+<label>New Shipping Address</label>
+<textarea name="new_address" id="newAddress"></textarea>
+</div>
+</div>
+
+<div class="payment-options">
+<label>
+{% if total > 50000 %}
+<label style="color:#9ca3af;">
+    <input type="radio" name="payment" value="COD" disabled>
+    Cash On Delivery (Not available for orders above ₹50,000)
+</label>
+{% else %}
+<label>
+    <input type="radio" name="payment" value="COD" checked>
+    Cash On Delivery
+</label>
+{% endif %}
+</label>
+
+<label>
+<input type="radio" name="payment" value="ONLINE">
+Online Payment
+</label>
+</div>
+
+<button type="submit" class="place-order-btn">
+Place Order
+</button>
+
+</form>
+</div>
+
+
+<!-- ===============================
+     RIGHT SIDE SUMMARY
+================================= -->
+
+<!-- ===============================
+     RIGHT SIDE SUMMARY
+================================= -->
+<div class="order-summary">
+
+<h2>Order Summary</h2>
+
+{% for item in cart_items %}
+<div class="summary-item">
+    <span>{{ item.product.name }} × {{ item.quantity }}</span>
+    <span>₹{{ item.subtotal|floatformat:2 }}</span>
+</div>
+{% endfor %}
+
+<div class="summary-item">
+    <span>Subtotal</span>
+    <span>₹{{ subtotal|floatformat:2 }}</span>
+</div>
+
+<div class="summary-item">
+    <span>CGST (2.5%)</span>
+    <span>₹{{ cgst|floatformat:2 }}</span>
+</div>
+
+<div class="summary-item">
+    <span>SGST (2.5%)</span>
+    <span>₹{{ sgst|floatformat:2 }}</span>
+</div>
+
+<div class="summary-total">
+    <span>Total</span>
+    <span>₹{{ total|floatformat:2 }}</span>
+</div>
+</div>
+</div>
+
+<script>
+const checkbox = document.getElementById("differentAddress");
+const newAddressBox = document.getElementById("newAddressBox");
+const mainAddress = document.getElementById("mainAddress");
+const newAddress = document.getElementById("newAddress");
+
+checkbox.addEventListener("change", function() {
+    if (this.checked) {
+        newAddressBox.style.display = "block";
+        mainAddress.removeAttribute("required");
+        newAddress.setAttribute("required", "required");
+    } else {
+        newAddressBox.style.display = "none";
+        mainAddress.setAttribute("required", "required");
+        newAddress.removeAttribute("required");
+    }
+});
+
+const totalAmount = parseFloat("{{ total }}");
+if (totalAmount > 50000) {
+    document.querySelector('input[value="ONLINE"]').checked = true;
+}
+</script>
+{% endblock %}

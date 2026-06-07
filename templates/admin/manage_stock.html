@@ -1,0 +1,56 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+
+<h1>📊 Manage Stock</h1>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+<table class="admin-table">
+    <thead>
+        <tr>
+            <th>Index</th>
+            <th>Product</th>
+            <th>Current Stock</th>
+            <th>Update Stock</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            
+            <td>{{ products.start_index|add:forloop.counter0 }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.stock }}</td>
+            <td>
+                <form method="POST" style="display:flex; gap:10px;">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <input type="number" name="stock" value="{{ product.stock }}" min="0" max="200" required>
+                    <button type="submit" class="primary-btn">Update</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<!-- 🔢 Pagination -->
+<div class="pagination">
+    {% if products.has_previous %}
+        <a href="?page={{ products.previous_page_number }}&q={{ query }}">Previous</a>
+    {% endif %}
+
+    {% for num in products.paginator.page_range %}
+        {% if products.number == num %}
+            <span>{{ num }}</span>
+        {% else %}
+            <a href="?page={{ num }}&q={{ query }}">{{ num }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if products.has_next %}
+        <a href="?page={{ products.next_page_number }}&q={{ query }}">Next</a>
+    {% endif %}
+</div>
+{% endblock %}

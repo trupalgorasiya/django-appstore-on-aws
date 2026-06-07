@@ -1,0 +1,53 @@
+{% load static %}
+
+<footer class="footer">
+    <div class="footer-container">
+
+        <!-- BRAND -->
+        <div class="footer-section brand">
+            <h2 class="footer-logo-text">JVJ Enterprise</h2>
+            <p class="footer-tagline">
+               
+            </p>
+
+            <div class="social-icons">
+                <a href="#"><img src="{% static 'img/facebook.png' %}" alt="Facebook"></a>
+                <a href="#"><img src="{% static 'img/instagram.png' %}" alt="Instagram"></a>
+                <a href="#"><img src="{% static 'img/youtube.png' %}" alt="YouTube"></a>
+            </div>
+        </div>
+
+        <!-- QUICK LINKS -->
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About Us</a></li>
+                <li><a href="{% url 'faqs' %}">FAQs</a></li>
+                
+            </ul>
+        </div>
+
+        
+
+        <!-- CONTACT -->
+        <div class="footer-section">
+            <h3>Contact Info</h3>
+            <p><strong>Phone:</strong> +91 9923454980</p>
+            <p><strong>Email:</strong> support@lightstore.com</p>
+            <p><strong>Address:</strong> Ahmedabad, Gujarat, India</p>
+        </div>
+
+    </div>
+
+    <!-- BOTTOM BAR -->
+    <div class="footer-bottom">
+        <p>© 2026 JVJ Enterprise. All Rights Reserved.</p>
+
+        <div class="footer-bottom-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+            <a href="#">Cookies Policy</a>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,66 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+
+<h1>🖼 Manage Images - {{ product.name }}</h1>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+<!-- Back Button -->
+<a href="{% url 'manage_products' %}" class="primary-btn" style="margin-bottom:20px; display:inline-block;">
+    ← Back to Products
+</a>
+
+<!-- Add Images -->
+<div class="card" style="margin-bottom:25px;">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="add">
+
+        <label>Add New Images</label>
+        <input type="file" name="images" multiple accept="image/*" required>
+
+        <button type="submit" class="primary-btn" style="margin-top:10px;">
+            Upload
+        </button>
+    </form>
+</div>
+
+<!-- Image Gallery -->
+<div class="image-grid">
+    {% for img in images %}
+    <div class="image-card {% if img.is_primary %}primary-image{% endif %}">
+        <img src="{{ img.image.url }}">
+
+        {% if img.is_primary %}
+            <span class="badge">Primary</span>
+        {% endif %}
+
+        <div class="image-actions">
+
+            {% if not img.is_primary %}
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="set_primary">
+                <input type="hidden" name="image_id" value="{{ img.id }}">
+                <button class="edit-btn">Set Primary</button>
+            </form>
+            {% endif %}
+
+            <form method="POST"
+                  onsubmit="return confirm('Delete this image?');">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="image_id" value="{{ img.id }}">
+                <button class="delete-btn">Delete</button>
+            </form>
+
+        </div>
+    </div>
+    {% empty %}
+    <p>No images uploaded yet.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}
