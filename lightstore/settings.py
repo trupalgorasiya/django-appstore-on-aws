@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from pathlib import Path
+load_dotenv()
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +29,8 @@ SECRET_KEY = 'django-insecure-g2dg0ry*$l(32zktp_3!9-+25gj_4z@=jgy6+1exi&!@0je2q4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+#for testing 
+ALLOWED_HOSTS = [ "* "]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -81,45 +86,21 @@ WSGI_APPLICATION = 'lightstore.wsgi.application'
 
 RAZORPAY_KEY_ID = "rzp_test_QRvsdEFaC3EA6l"
 RAZORPAY_KEY_SECRET = "buLoHaDp2eHNGuASj4jWwfmx"
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'jvjenterprise',
-#         'USER': 'root',
-#         'PASSWORD': 'Trupal@11',
-#         'HOST':'localhost',
-#         'PORT':'3306',
-#     }
-# }
-import os
-from pathlib import Path
-from dotenv import load_dotenv
-
-load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv("DB_NAME"),
-        'USER': os.getenv("DB_USER"),
-        'PASSWORD': os.getenv("DB_PASSWORD"),
-        'HOST': os.getenv("DB_HOST"),
-        'PORT': os.getenv("DB_PORT"),
+        'NAME': 'jvjenterprise',
+        'USER': 'admin',
+        'PASSWORD': 'Pass123456',
+        'HOST':'django-db.c1sg6qq0gn4g.ap-south-1.rds.amazonaws.com',
+        'PORT':'3306',
     }
 }
 
-#os.getenv("DB_NAME")
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -167,14 +148,44 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+ADMIN_EMAIL="admin@example.com"
+ADMIN_PASSWORD = "Trupal@11"
+ADMIN_SESSION_KEY = "admin_logged_in"
 
 
+# RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
+# RAZORPAY_KEY_SECRET = os.getenv("RAZORPAY_KEY_SECRET"),
+# EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+# EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'jvjenterprise',
+#         'USER': 'root',
+#         'PASSWORD': 'Trupal@11',
+#         'HOST':'localhost',
+#         'PORT':'3306',
+#     }
+# }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': os.getenv("DB_NAME"),
+#         'USER': os.getenv("DB_USER"),
+#         'PASSWORD': os.getenv("DB_PASSWORD"),
+#         'HOST': os.getenv("DB_HOST"),
+#         'PORT': os.getenv("DB_PORT"),
+#     }
+# }
 
 # ==============================
 # ADMIN LOGIN CREDENTIALS
 # ==============================
 
-ADMIN_EMAIL = os.getenv("ADMIN_EMAIL")
-ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")   
+# ADMIN_EMAIL = os.getenv("ADMIN_EMAIL")
+# ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")   
 
-ADMIN_SESSION_KEY = os.getenv("ADMIN_SESSION_KEY")
+# ADMIN_SESSION_KEY = os.getenv("ADMIN_SESSION_KEY")
